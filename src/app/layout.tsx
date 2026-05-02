@@ -7,7 +7,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Gemini Load Balancer',
-  description: 'A proxy server for the Google Gemini API with key management and load balancing',
+  description: 'A reverse proxy for Google AI Studio API with key management and load balancing',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
