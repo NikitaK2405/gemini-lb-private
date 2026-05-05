@@ -141,7 +141,23 @@ export async function POST(req: NextRequest) {
         return handleStreamingResponse(response, null);
       }
 
+      // Update by NK: BEGIN
+      // Removing Google's extra_content field from response, because some
+      // strict OpenAI-compatible clients like OpenClaw don't expect to recieve it
+      if (response.data && response.data.choices) {
+        response.data.choices = response.data.choices.map((choice: any) => {
+          if (choice.message && choice.message.extra_content) {
+            // Creating a copy of response to leave the source object unchanged
+            const cleanedMessage = { ...choice.message };
+            delete cleanedMessage.extra_content;
+            return { ...choice, message: cleanedMessage };
+          }
+          return choice;
+        });
+      }
       return NextResponse.json(response.data);
+      // Update: END
+      
     } catch (error: any) {
       const isRateLimit = await keyManager.markKeyError(error);
 
