@@ -1,0 +1,5 @@
+build:
+  tool: node
+  toolVersion: 20
+  installCommand: npm install
+  buildCommand: npm run build
